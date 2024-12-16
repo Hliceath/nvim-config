@@ -4,10 +4,12 @@ return {
 	config = function()
 		require("conform").setup({
 			formatters_by_ft = {
+				gdscript = { "gdformat" },
 				lua = { "stylua" },
-				python = { "isort", "black" },
+				javascript = { "prettier" },
+				-- python = { "isort", "black" },
 				rust = { "rustfmt", lsp_format = "fallback" },
-				javascript = { "prettierd", "prettier", stop_after_first = true },
+				typescript = { "prettier" },
 			},
 			format_on_save = {
 				timeout_ms = 500,
