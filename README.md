@@ -9,3 +9,6 @@ Requirements for this config all depends on whatever [lazy.nvim needs](https://g
 ## Installation
 
 Put it into ~/.config/ and rename the folder /nvim/
+
+I had to install fzf with git to avoid a warning in :checkhealth for the plugin fzf-lua.nvim (sudo apt install fzf wasn't the right version):
+https://github.com/junegunn/fzf?tab=readme-ov-file#using-git
