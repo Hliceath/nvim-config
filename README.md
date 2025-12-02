@@ -4,13 +4,19 @@ My nvim config
 
 ## Requirements
 
-- Install `git`, `make`, `unzip`, `gcc`, `ripgrep`
+- Install the following packages: `git`, `make`, `unzip`, `gcc`, `ripgrep`
 - A nerd font (obviously the great Iosevka Nerd font)
 
-## Languages/Framework Supported
+## Languages Supported
 
-- lua
-- javascript
-- react
-- rust
-- typescript
+- Bash
+- C/C++
+- HTML/CSS
+- Lua
+- Javascript
+- Rust
+- Typescript
+
+## Framework Supported
+
+- React
