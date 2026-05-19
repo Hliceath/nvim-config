@@ -1,11 +1,9 @@
 # Nvim Config
 
-My nvim config
-
 ## Requirements
 
-- Install the following packages: `git`, `make`, `unzip`, `gcc`, `ripgrep`
-- A nerd font (obviously the great Iosevka Nerd font)
+- Install the following packages: `git`, `make`, `unzip`, `gcc`, `ripgrep`, `tar`, `curl`
+- A nerd font (like Iosevka Nerd Font)
 
 ## Languages Supported
 
