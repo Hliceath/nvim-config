@@ -23,6 +23,5 @@ require("lazy").setup({
 	require("plugins.none-ls"), -- Autoformat on save
 	require("plugins.rose-pine"), -- Color theme
 	require("plugins.telescope"), -- Search
-	require("plugins.typescript-tools"), -- LSP for TypeScript
 	require("plugins.which-key"), -- Show keybinds description
 })
