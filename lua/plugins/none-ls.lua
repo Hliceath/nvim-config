@@ -22,7 +22,7 @@ return {
 
 		local sources = {
 			formatting.prettier.with({
-				filetypes = { "css", "html", "json", "markdown", "typescript", "typescriptreact", "yaml" },
+				filetypes = { "css", "html", "json", "markdown", "js", "yaml" },
 			}),
 			formatting.stylua,
 			formatting.shfmt.with({ args = { "-i", "4" } }),
