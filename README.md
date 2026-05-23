@@ -7,14 +7,5 @@
 
 ## Languages Supported
 
-- Bash
-- C/C++
-- HTML/CSS
+- C
 - Lua
-- Javascript
-- Rust
-- Typescript
-
-## Framework Supported
-
-- React
