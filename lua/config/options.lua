@@ -1,5 +1,3 @@
-vim.loader.enable()
-
 vim.g.have_nerd_font = true
 
 vim.o.number = true
