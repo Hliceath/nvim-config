@@ -1,5 +1,5 @@
-require("tokyonight").setup{
-    styles = {
-        comments = { italic = false },
-    }
-}
+require("tokyonight").setup({
+	styles = {
+		comments = { italic = false },
+	},
+})

@@ -1,6 +1,8 @@
 require("config.options")
 require("config.keymaps")
 
+vim.loader.enable()
+
 local function run_build(name, cmd, cwd)
 	local result = vim.system(cmd, { cwd = cwd }):wait()
 	if result.code ~= 0 then
@@ -77,26 +79,14 @@ local dap = {
 	"https://github.com/leoluz/nvim-dap-go",
 }
 
-local neotree = {
-	{ src = "https://github.com/nvim-neo-tree/neo-tree.nvim", version = vim.version.range("*") },
-	"https://github.com/nvim-lua/plenary.nvim",
-	"https://github.com/MunifTanjim/nui.nvim",
-}
-if vim.g.have_nerd_font then
-	table.insert(neotree, "https://github.com/nvim-tree/nvim-web-devicons")
-end
-
 vim.pack.add({
 	gh("stevearc/conform.nvim"), -- formatting
 	gh("j-hui/fidget.nvim"), -- status update for LSP
 	gh("lewis6991/gitsigns.nvim"), -- adds git related signs
 	gh("NMAC427/guess-indent.nvim"), -- detects and sets automatically the indentation
 	gh("lukas-reineke/indent-blankline.nvim"), -- add indentation guides
-	gh("nvim-mini/mini.nvim"), -- various independent plugins/modules
 	gh("windwp/nvim-autopairs"), -- autopairs
-	gh("mfussenegger/nvim-lint"), -- lint
 	gh("nvim-tree/nvim-web-devicons"), -- adds pretty icons
-	gh("folke/todo-comments.nvim"), -- highlight todo
 	gh("folke/tokyonight.nvim"), -- colorscheme
 	gh("folke/which-key.nvim"), -- show pending keybinds
 	{ src = gh("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") }, -- snippet engine
@@ -105,7 +95,6 @@ vim.pack.add({
 })
 vim.pack.add(mason) -- LSPs and related tools
 vim.pack.add(dap) -- debug code
-vim.pack.add(neotree) -- show file system
 vim.pack.add(telescope_plugins) -- fuzzy finder
 
 require("plugins.tokyonight")
@@ -118,10 +107,7 @@ require("plugins.debug")
 require("plugins.gitsigns")
 require("plugins.guess-indent")
 require("plugins.indent-blankline")
-require("plugins.lint")
 require("plugins.mason")
-require("plugins.mini")
-require("plugins.neo-tree")
 require("plugins.luasnip")
 require("plugins.telescope")
 require("plugins.treesitter")
