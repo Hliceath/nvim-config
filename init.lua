@@ -23,6 +23,11 @@ vim.api.nvim_create_autocmd("PackChanged", {
 			return
 		end
 
+		if name == "telescope-fzf-native.nvim" and vim.fn.executable("make") == 1 then
+			run_build(name, { "make" }, ev.data.path)
+			return
+		end
+
 		if name == "LuaSnip" then
 			if vim.fn.has("win32") ~= 1 and vim.fn.executable("make") == 1 then
 				run_build(name, { "make", "install_jsregexp" }, ev.data.path)
