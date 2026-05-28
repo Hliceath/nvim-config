@@ -1,20 +1,10 @@
-return {
-	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
-		keys = {
-			{
-				"<leader>?",
-				function()
-					require("which-key").show({ global = false })
-				end,
-				desc = "Buffer Local Keymaps (which-key)",
-			},
-		},
-	},
+require("which-key").setup{
+    delay = 0,
+    icons = { mappings = vim.g.have_nerd_font },
+    spec = {
+      { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
+      { '<leader>t', group = '[T]oggle' },
+      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
+      { 'gr', group = 'LSP Actions', mode = { 'n' } },
+    },
 }

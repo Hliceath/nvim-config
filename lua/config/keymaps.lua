@@ -4,6 +4,9 @@ vim.g.maplocalleader = " "
 
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
+-- clear highlights on search when pressing <Esc> in normal mode
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
 local opts = { noremap = true, silent = true }
 
 -- resize with arrows
@@ -25,10 +28,10 @@ vim.keymap.set("n", "<leader>se", "<C-w>=", opts) -- make split windows equal wi
 vim.keymap.set("n", "<leader>xs", ":close<CR>", opts) -- close current split window
 
 -- navigate between splits
-vim.keymap.set("n", "<C-k>", ":wincmd k<CR>", opts)
-vim.keymap.set("n", "<C-j>", ":wincmd j<CR>", opts)
-vim.keymap.set("n", "<C-h>", ":wincmd h<CR>", opts)
-vim.keymap.set("n", "<C-l>", ":wincmd l<CR>", opts)
+vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
 vim.keymap.set("n", "<C-s>", "<cmd> w <CR>", { desc = "Save file", noremap = true, silent = true })
 vim.keymap.set("n", "<C-q>", "<cmd> q <CR>", { desc = "Quit file", noremap = true, silent = true })
@@ -48,10 +51,37 @@ vim.keymap.set("v", ">", ">gv", opts)
 -- keep last yanked when pasting
 vim.keymap.set("v", "p", '"_dP', opts)
 
--- diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
-vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+-- diagnostic config & keymaps
+vim.diagnostic.config({
+	update_in_insert = false,
+	severity_sort = true,
+	float = { border = "rounded", source = "if_many" },
+	underline = { severity = { min = vim.diagnostic.severity.WARN } },
+
+	-- can switch between these as you prefer
+	virtual_text = true, -- text shows up at the end of the line
+	virtual_lines = false, -- text shows up underneath the line, with virtual lines
+
+	-- auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+	jump = {
+		on_jump = function(_, bufnr)
+			vim.diagnostic.open_float({
+				bufnr = bufnr,
+				scope = "cursor",
+				focus = false,
+			})
+		end,
+	},
+})
+
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight when yanking (copying) text",
+	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+	callback = function()
+		vim.hl.on_yank()
+	end,
+})
 
 vim.keymap.set("i", "jj", "<Esc>", opts)
