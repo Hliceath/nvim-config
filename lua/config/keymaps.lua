@@ -50,6 +50,10 @@ vim.keymap.set("v", ">", ">gv", opts)
 -- keep last yanked when pasting
 vim.keymap.set("v", "p", '"_dP', opts)
 
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+
+vim.keymap.set("i", "jj", "<Esc>", opts)
+
 -- diagnostic config & keymaps
 vim.diagnostic.config({
 	update_in_insert = false,
@@ -73,8 +77,6 @@ vim.diagnostic.config({
 	},
 })
 
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
-
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
@@ -82,5 +84,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.hl.on_yank()
 	end,
 })
-
-vim.keymap.set("i", "jj", "<Esc>", opts)
