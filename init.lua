@@ -81,7 +81,6 @@ local dap = {
 
 vim.pack.add({
 	gh("stevearc/conform.nvim"), -- formatting
-	gh("j-hui/fidget.nvim"), -- status update for LSP
 	gh("lewis6991/gitsigns.nvim"), -- adds git related signs
 	gh("NMAC427/guess-indent.nvim"), -- detects and sets automatically the indentation
 	gh("lukas-reineke/indent-blankline.nvim"), -- add indentation guides
