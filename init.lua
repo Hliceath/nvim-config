@@ -1,7 +1,76 @@
-require("config.options")
 require("config.keymaps")
+require("config.options")
 
 vim.loader.enable()
+
+local gh = function(x)
+	return "https://github.com/" .. x
+end
+local cb = function(x)
+	return "https://codeberg.org/" .. x
+end
+
+local telescope_plugins = {
+	gh("nvim-lua/plenary.nvim"),
+	gh("nvim-telescope/telescope.nvim"),
+	gh("nvim-telescope/telescope-ui-select.nvim"),
+}
+if vim.fn.executable("make") == 1 then
+	table.insert(telescope_plugins, gh("nvim-telescope/telescope-fzf-native.nvim"))
+end
+
+local mason = {
+	gh("neovim/nvim-lspconfig"),
+	gh("mason-org/mason.nvim"),
+	gh("mason-org/mason-lspconfig.nvim"),
+	gh("WhoIsSethDaniel/mason-tool-installer.nvim"),
+}
+
+local dap = {
+	gh("mfussenegger/nvim-dap"),
+	gh("rcarriga/nvim-dap-ui"),
+	gh("nvim-neotest/nvim-nio"),
+	gh("mason-org/mason.nvim"),
+	gh("jay-babu/mason-nvim-dap.nvim"),
+	gh("leoluz/nvim-dap-go"),
+}
+
+vim.pack.add({
+	gh("stevearc/conform.nvim"), -- formatting
+	gh("lewis6991/gitsigns.nvim"), -- adds git related signs
+	gh("NMAC427/guess-indent.nvim"), -- detects and sets automatically the indentation
+	gh("lukas-reineke/indent-blankline.nvim"), -- add indentation guides
+	gh("windwp/nvim-autopairs"), -- autopairs
+	gh("nvim-tree/nvim-web-devicons"), -- adds pretty icons
+	gh("folke/tokyonight.nvim"), -- colorscheme
+	gh("folke/which-key.nvim"), -- show pending keybinds
+	{ src = gh("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") }, -- snippet engine
+	{ src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") }, -- autocomplete engine
+	{ src = gh("nvim-treesitter/nvim-treesitter"), version = "main" }, -- highlight
+})
+
+vim.pack.add(dap) -- debug code
+vim.pack.add(mason) -- LSPs and related tools
+vim.pack.add(telescope_plugins) -- fuzzy finder
+
+require("plugins.autopairs")
+require("plugins.blink")
+require("plugins.conform")
+require("plugins.debug")
+require("plugins.gitsigns")
+require("plugins.guess-indent")
+require("plugins.indent-blankline")
+require("plugins.lspconfig")
+require("plugins.luasnip")
+require("plugins.telescope")
+require("plugins.tokyonight")
+require("plugins.treesitter")
+require("plugins.web-devicons")
+require("plugins.which-key")
+
+vim.cmd.colorscheme("tokyonight-moon")
+
+-- autocmds
 
 local function run_build(name, cmd, cwd)
 	local result = vim.system(cmd, { cwd = cwd }):wait()
@@ -47,68 +116,10 @@ vim.api.nvim_create_autocmd("PackChanged", {
 	end,
 })
 
-local gh = function(x)
-	return "https://github.com/" .. x
-end
-local cb = function(x)
-	return "https://codeberg.org/" .. x
-end
-
-local telescope_plugins = {
-	gh("nvim-lua/plenary.nvim"),
-	gh("nvim-telescope/telescope.nvim"),
-	gh("nvim-telescope/telescope-ui-select.nvim"),
-}
-if vim.fn.executable("make") == 1 then
-	table.insert(telescope_plugins, gh("nvim-telescope/telescope-fzf-native.nvim"))
-end
-
-local mason = {
-	gh("neovim/nvim-lspconfig"),
-	gh("mason-org/mason.nvim"),
-	gh("mason-org/mason-lspconfig.nvim"),
-	gh("WhoIsSethDaniel/mason-tool-installer.nvim"),
-}
-
-local dap = {
-	"https://github.com/mfussenegger/nvim-dap",
-	"https://github.com/rcarriga/nvim-dap-ui",
-	"https://github.com/nvim-neotest/nvim-nio",
-	"https://github.com/mason-org/mason.nvim",
-	"https://github.com/jay-babu/mason-nvim-dap.nvim",
-	"https://github.com/leoluz/nvim-dap-go",
-}
-
-vim.pack.add({
-	gh("stevearc/conform.nvim"), -- formatting
-	gh("lewis6991/gitsigns.nvim"), -- adds git related signs
-	gh("NMAC427/guess-indent.nvim"), -- detects and sets automatically the indentation
-	gh("lukas-reineke/indent-blankline.nvim"), -- add indentation guides
-	gh("windwp/nvim-autopairs"), -- autopairs
-	gh("nvim-tree/nvim-web-devicons"), -- adds pretty icons
-	gh("folke/tokyonight.nvim"), -- colorscheme
-	gh("folke/which-key.nvim"), -- show pending keybinds
-	{ src = gh("L3MON4D3/LuaSnip"), version = vim.version.range("2.*") }, -- snippet engine
-	{ src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") }, -- autocomplete engine
-	{ src = gh("nvim-treesitter/nvim-treesitter"), version = "main" }, -- highlight
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight when yanking (copying) text",
+	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+	callback = function()
+		vim.hl.on_yank()
+	end,
 })
-vim.pack.add(mason) -- LSPs and related tools
-vim.pack.add(dap) -- debug code
-vim.pack.add(telescope_plugins) -- fuzzy finder
-
-require("plugins.tokyonight")
-vim.cmd.colorscheme("tokyonight-moon")
-
-require("plugins.autopairs")
-require("plugins.blink")
-require("plugins.conform")
-require("plugins.debug")
-require("plugins.gitsigns")
-require("plugins.guess-indent")
-require("plugins.indent-blankline")
-require("plugins.mason")
-require("plugins.luasnip")
-require("plugins.telescope")
-require("plugins.treesitter")
-require("plugins.web-devicons")
-require("plugins.which-key")

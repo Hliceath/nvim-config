@@ -41,3 +41,5 @@ vim.o.cursorline = true
 vim.o.scrolloff = 10
 
 vim.o.confirm = true
+
+vim.opt.statusline = "%q%w%h[%R%3n %-16f%a %1M]%=%#ErrorMsg#%y%0* %4O %4l/%L %-5(%c%-V%) %P"
